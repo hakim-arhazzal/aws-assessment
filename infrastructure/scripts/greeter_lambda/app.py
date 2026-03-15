@@ -7,12 +7,14 @@ import boto3
 
 
 dynamodb = boto3.client("dynamodb")
-sns = boto3.client("sns")
 
 
 def lambda_handler(event, context):
     region = os.environ["AWS_REGION_NAME"]
     table_name = os.environ["DYNAMODB_TABLE"]
+    topic_arn = os.environ["SNS_TOPIC_ARN"]
+    topic_region = topic_arn.split(":")[3]
+    sns = boto3.client("sns", region_name=topic_region)
 
     item = {
         "id": {"S": str(uuid.uuid4())},
@@ -30,7 +32,7 @@ def lambda_handler(event, context):
         "repo": os.environ["GITHUB_REPO_URL"],
     }
     sns.publish(
-        TopicArn=os.environ["SNS_TOPIC_ARN"],
+        TopicArn=topic_arn,
         Message=json.dumps(message),
     )
 
@@ -43,4 +45,3 @@ def lambda_handler(event, context):
         "headers": {"Content-Type": "application/json"},
         "body": json.dumps(body),
     }
-

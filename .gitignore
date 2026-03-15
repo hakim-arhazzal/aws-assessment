@@ -2,8 +2,9 @@
 .terraform.lock.hcl
 *.tfstate
 *.tfstate.*
+*.tfvars
+*.auto.tfvars
 *.zip
 __pycache__/
 .pytest_cache/
 .venv/
-

@@ -1,0 +1,4 @@
+candidate_email    = "candidate@example.com"
+github_repo_url    = "https://github.com/your-org/unleash-live-assessment"
+test_user_password = "ChangeMe!1234"
+

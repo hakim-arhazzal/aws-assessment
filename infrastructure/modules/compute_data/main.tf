@@ -55,7 +55,7 @@ module "lambda_greeter" {
 
 
 module "lambda_dispatcher" {
-  source = "../lambda"
+  source               = "../lambda"
   name_prefix          = var.name_prefix
   function_name_suffix = "dispatcher"
   package_subdir       = "dispatcher_lambda"

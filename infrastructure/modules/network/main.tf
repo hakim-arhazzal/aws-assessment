@@ -1,3 +1,4 @@
+#tfsec:ignore:aws-ec2-require-vpc-flow-logs-for-all-vpcs VPC flow logs are omitted to keep the assessment stack cost-conscious and minimal.
 resource "aws_vpc" "this" {
   cidr_block           = local.vpc_cidr_block
   enable_dns_hostnames = true
@@ -16,6 +17,7 @@ resource "aws_internet_gateway" "this" {
   }
 }
 
+#tfsec:ignore:aws-ec2-no-public-ip-subnet Public subnets are explicitly required to avoid NAT Gateway charges for this assessment.
 resource "aws_subnet" "public" {
   count = length(local.azs)
 

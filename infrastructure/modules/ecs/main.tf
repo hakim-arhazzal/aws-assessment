@@ -1,3 +1,4 @@
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key The assessment does not require customer-managed KMS keys for transient ECS task logs.
 resource "aws_cloudwatch_log_group" "ecs" {
   name              = "/ecs/${var.name_prefix}-dispatch"
   retention_in_days = 7
@@ -5,6 +6,11 @@ resource "aws_cloudwatch_log_group" "ecs" {
 
 resource "aws_ecs_cluster" "this" {
   name = "${var.name_prefix}-cluster"
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_ecs_task_definition" "dispatch" {

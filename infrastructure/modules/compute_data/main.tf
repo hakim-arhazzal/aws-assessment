@@ -5,10 +5,19 @@ module "network" {
   aws_region  = var.aws_region
 }
 
+#tfsec:ignore:aws-dynamodb-table-customer-key The assessment does not require customer-managed KMS keys, and AWS-managed encryption is sufficient for this sandbox.
 resource "aws_dynamodb_table" "greeting_logs" {
   name         = "${var.name_prefix}-GreetingLogs"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "id"
+
+  point_in_time_recovery {
+    enabled = true
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
 
   attribute {
     name = "id"
